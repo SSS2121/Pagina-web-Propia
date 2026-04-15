@@ -363,14 +363,7 @@ function renderProjects(lang) {
     `;
   }).join('');
 
-  // Placeholder card
-  grid.innerHTML += `
-    <div class="project-add-placeholder reveal">
-      <div class="add-icon">＋</div>
-      <span>${t['projects.placeholder_title']}</span>
-      <span>${t['projects.placeholder_body']}</span>
-    </div>
-  `;
+
 
   // Re-observe new elements
   document.querySelectorAll('#projectsGrid .reveal').forEach(el => {
