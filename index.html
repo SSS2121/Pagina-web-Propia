@@ -78,14 +78,6 @@
       <!-- Avatar -->
       <div class="hero-profile-wrapper">
         <div class="hero-avatar reveal" id="heroAvatar">
-          <!--
-            ╔══════════════════════════════════════════╗
-            ║  📸 FOTO DE PERFIL                       ║
-            ║  Coloca tu foto en:                      ║
-            ║  assets/images/profile.jpg               ║
-            ║  (reemplaza el archivo con ese nombre)   ║
-            ╚══════════════════════════════════════════╝
-          -->
           <img src="assets/images/profile.jpg" alt="Santiago Serna Solarte"
             onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback')" />
           <div class="avatar-ring" aria-hidden="true"></div>
@@ -260,18 +252,11 @@
           Sistemas que resuelven problemas reales con tecnología de punta.
         </p>
       </div>
-
-      <!--
-        ╔══════════════════════════════════════════════════════╗
-        ║  🚀 AGREGAR PROYECTOS                               ║
-        ║  Edita el archivo: data/projects.json               ║
-        ║  Agrega un objeto JSON con estos campos:            ║
-        ║  { "id", "title", "github", "status",              ║
-        ║    "icon", "description_es", "description_en",     ║
-        ║    "tags": [] }                                     ║
-        ╚══════════════════════════════════════════════════════╝
-    -->
-
+      <div class="projects-grid" id="projectsGrid" role="list">
+        <div style="color:var(--text-muted);font-family:var(--font-mono);font-size:.85rem;padding:20px;">
+          Cargando proyectos...
+        </div>
+      </div>
     </div>
   </section>
 
@@ -290,25 +275,6 @@
           Formación académica y técnica en constante expansión.
         </p>
       </div>
-
-      <!--
-        ╔══════════════════════════════════════════════════════╗
-        ║  📜 AGREGAR CERTIFICADOS — 2 PASOS:                 ║
-        ║  1. Copia la imagen del certificado a:              ║
-        ║     assets/certificates/cert_nombre.jpg             ║
-        ║  2. Abre data/certificates.json y agrega:           ║
-        ║     {                                               ║
-        ║       "id": 2,                                      ║
-        ║       "title": "Nombre del Certificado",            ║
-        ║       "institution": "Coursera / Google / etc.",    ║
-        ║       "date": "2025-03",                            ║
-        ║       "image": "assets/certificates/cert_x.jpg",   ║
-        ║       "category": "Machine Learning",               ║
-        ║       "description_es": "Descripción...",           ║
-        ║       "description_en": "Description..."            ║
-        ║     }                                               ║
-        ╚══════════════════════════════════════════════════════╝
-      -->
       <div class="certs-grid" id="certsGrid" role="list">
         <div style="color:var(--text-muted);font-family:var(--font-mono);font-size:.85rem;padding:20px;">
           Cargando certificados...
@@ -350,7 +316,8 @@
               <div class="contact-icon-wrap">📧</div>
               <div>
                 <p class="contact-label" data-i18n="contact.email_label">CORREO ELECTRÓNICO</p>
-                <p class="contact-value obfuscated-email" data-i18n="contact.email_protected">[Protegido, click para copiar]</p>
+                <p class="contact-value obfuscated-email" data-i18n="contact.email_protected">[Protegido, click para
+                  copiar]</p>
               </div>
               <button class="contact-copy" id="copyEmail" data-copy="email_protected" aria-label="Copiar correo"
                 title="Copiar">📋</button>
