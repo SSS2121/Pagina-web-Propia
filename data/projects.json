@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "N8n — List of Printers",
+    "github": "https://github.com/SSS2121/N8n---list-of-printers",
+    "status": "production",
+    "icon": "🖨️",
+    "description_es": "Sistema de automatización de misión crítica diseñado para la orquestación de flujos de datos financieros en tiempo real. El sistema captura eventos de ventas desde un ERP (Siigo), procesa la información mediante una arquitectura de microservicios y asegura la integridad de la impresión física mediante validación en base de datos, eliminando la redundancia de datos.",
+    "description_en": "Mission-critical automation system designed for real-time financial data flow orchestration. Captures sales events from an ERP (Siigo), processes information through a microservices architecture, and ensures physical print integrity through database validation, eliminating data redundancy.",
+    "tags": ["n8n", "PostgreSQL", "JavaScript", "Siigo API", "PrintNode", "Google Drive API", "PDF Generation", "Node.js"]
+  }
+]

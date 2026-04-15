@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Santiago Serna Solarte — Ingeniero de Sistemas & IA</title>
+  <meta name="description"
+    content="Portafolio de Santiago Serna Solarte. Estudiante de Ingeniería de Sistemas en la Universidad Santiago de Cali especializado en automatización con n8n, Machine Learning e Inteligencia Artificial." />
+  <meta name="keywords"
+    content="Santiago Serna Solarte, Ingeniería de Sistemas, Machine Learning, n8n, Automatización, Inteligencia Artificial, Portafolio" />
+  <meta name="author" content="Santiago Serna Solarte" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Santiago Serna Solarte — Ingeniero de Sistemas & IA" />
+  <meta property="og:description"
+    content="Portafolio personal. Sistemas de automatización, Machine Learning e Ingeniería de IA." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <a href="#home" class="nav-logo">SSS<span class="accent">.</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav.about">Sobre mí</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Proyectos</a></li>
+      <li><a href="#certificates" data-i18n="nav.certificates">Certificados</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Cambiar idioma">EN</button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="menu">
+    <a href="#about" role="menuitem" data-i18n="nav.about">Sobre mí</a>
+    <a href="#projects" role="menuitem" data-i18n="nav.projects">Proyectos</a>
+    <a href="#certificates" role="menuitem" data-i18n="nav.certificates">Certificados</a>
+    <a href="#contact" role="menuitem" data-i18n="nav.contact">Contacto</a>
+    <div class="mobile-lang">
+      <button class="lang-toggle" id="langToggleMobile" aria-label="Cambiar idioma">EN</button>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="hero" id="home" aria-label="Presentación">
+    <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+    <div class="nebula-1" aria-hidden="true"></div>
+    <div class="nebula-2" aria-hidden="true"></div>
+
+    <div class="hero-content">
+
+      <!-- Avatar -->
+      <div class="hero-profile-wrapper">
+        <div class="hero-avatar reveal" id="heroAvatar">
+          <!--
+            ╔══════════════════════════════════════════╗
+            ║  📸 FOTO DE PERFIL                       ║
+            ║  Coloca tu foto en:                      ║
+            ║  assets/images/profile.jpg               ║
+            ║  (reemplaza el archivo con ese nombre)   ║
+            ╚══════════════════════════════════════════╝
+          -->
+          <img src="assets/images/profile.jpg" alt="Santiago Serna Solarte"
+            onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback')" />
+          <div class="avatar-ring" aria-hidden="true"></div>
+          <div class="avatar-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="hero-text">
+        <p class="hero-greeting reveal reveal-delay-1" data-i18n="hero.greeting">Hola, soy</p>
+
+        <h1 class="hero-name reveal reveal-delay-2">Santiago Serna Solarte</h1>
+
+        <div class="hero-role reveal reveal-delay-3">
+          <span data-i18n="hero.role_prefix">Estudiante de&nbsp;</span>
+          <span class="typewriter" id="typewriter" aria-live="polite"></span><span class="cursor"
+            aria-hidden="true">|</span>
+        </div>
+
+        <p class="hero-description reveal reveal-delay-4" data-i18n="hero.description">
+          Construyendo el futuro desde la Universidad Santiago de Cali.
+          Fortaleciendo mis conocimientos en automatización de sistemas, inteligencia artificial y machine learning.
+        </p>
+
+        <div class="hero-cta reveal reveal-delay-4">
+          <a href="#projects" class="btn btn-primary" id="heroCtaProjects" data-i18n="hero.cta_projects">Ver
+            Proyectos</a>
+          <a href="#contact" class="btn btn-secondary" id="heroCtaContact" data-i18n="hero.cta_contact">Contactarme</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       ABOUT SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="about" aria-label="Sobre mí">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal" data-i18n="about.tag">// SOBRE MÍ</span>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="about.title">El Ser Humano<br>Detrás del Código
+        </h2>
+        <p class="section-subtitle reveal reveal-delay-2" data-i18n="about.subtitle">Ingeniero en formación con visión
+          de arquitecto.</p>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- Bio column -->
+        <div>
+          <p class="about-bio reveal reveal-delay-1" data-i18n="about.bio1">
+            Soy <strong>Santiago Serna Solarte</strong>, estudiante de Ingeniería de Sistemas en la
+            <strong>Universidad Santiago de Cali</strong>. Mi enfoque está en la intersección entre
+            la automatización inteligente y el aprendizaje automático.
+          </p>
+          <p class="about-bio reveal reveal-delay-2" data-i18n="about.bio2">
+            He diseñado y desplegado sistemas de automatización de misión crítica usando
+            <strong>n8n</strong>, integrando APIs empresariales, bases de datos relacionales y
+            servicios en la nube. Paralelamente, me encuentro en estudio de <strong>Machine Learning</strong>
+            y modelos de IA para llevar esa automatización al siguiente nivel.
+          </p>
+
+          <div class="about-highlights reveal reveal-delay-3">
+            <div class="highlight-item">
+              <div class="highlight-icon">🎓</div>
+              <span data-i18n="about.h1">Universidad Santiago de Cali</span>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-icon">🧠</div>
+              <span data-i18n="about.h2">Estudio y aprendizaje de Machine Learning</span>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-icon">⚙️</div>
+              <span data-i18n="about.h3">Automatización con n8n & APIs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills column -->
+        <div class="reveal reveal-delay-2">
+          <p class="skills-title" data-i18n="about.skills_label">// STACK TÉCNICO</p>
+
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">n8n / Automatización</span>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="80"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">PostgreSQL / Bases de Datos</span>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="75"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">JavaScript / Node.js</span>
+                <span class="skill-pct">60%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="60"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Python</span>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="75"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Machine Learning</span>
+                <span class="skill-pct">30%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="30"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">REST APIs & Cloud Services</span>
+                <span class="skill-pct">60%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" data-pct="60"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-tags" style="margin-top:24px;">
+            <span class="skill-tag">n8n</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Siigo API</span>
+            <span class="skill-tag">Google Drive API</span>
+            <span class="skill-tag">PrintNode</span>
+            <span class="skill-tag">REST APIs</span>
+            <span class="skill-tag">PDF Gen</span>
+            <span class="skill-tag">Git</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       PROJECTS SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="projects" aria-label="Proyectos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal" data-i18n="projects.tag">// PROYECTOS</span>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="projects.title">Showcase de<br>Proyectos</h2>
+        <p class="section-subtitle reveal reveal-delay-2" data-i18n="projects.subtitle">
+          Sistemas que resuelven problemas reales con tecnología de punta.
+        </p>
+      </div>
+
+      <!--
+        ╔══════════════════════════════════════════════════════╗
+        ║  🚀 AGREGAR PROYECTOS                               ║
+        ║  Edita el archivo: data/projects.json               ║
+        ║  Agrega un objeto JSON con estos campos:            ║
+        ║  { "id", "title", "github", "status",              ║
+        ║    "icon", "description_es", "description_en",     ║
+        ║    "tags": [] }                                     ║
+        ╚══════════════════════════════════════════════════════╝
+      -->
+      <div class="projects-grid" id="projectsGrid" role="list">
+        <!-- Los proyectos se inyectan dinámicamente desde data/projects.json -->
+        <div style="color:var(--text-muted);font-family:var(--font-mono);font-size:.85rem;padding:20px;">
+          Cargando proyectos...
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       CERTIFICATES SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="certificates" aria-label="Bóveda de Certificados">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal" data-i18n="certs.tag">// CERTIFICADOS</span>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="certs.title">Bóveda de<br>Certificados</h2>
+        <p class="section-subtitle reveal reveal-delay-2" data-i18n="certs.subtitle">
+          Formación académica y técnica en constante expansión.
+        </p>
+      </div>
+
+      <!--
+        ╔══════════════════════════════════════════════════════╗
+        ║  📜 AGREGAR CERTIFICADOS — 2 PASOS:                 ║
+        ║  1. Copia la imagen del certificado a:              ║
+        ║     assets/certificates/cert_nombre.jpg             ║
+        ║  2. Abre data/certificates.json y agrega:           ║
+        ║     {                                               ║
+        ║       "id": 2,                                      ║
+        ║       "title": "Nombre del Certificado",            ║
+        ║       "institution": "Coursera / Google / etc.",    ║
+        ║       "date": "2025-03",                            ║
+        ║       "image": "assets/certificates/cert_x.jpg",   ║
+        ║       "category": "Machine Learning",               ║
+        ║       "description_es": "Descripción...",           ║
+        ║       "description_en": "Description..."            ║
+        ║     }                                               ║
+        ╚══════════════════════════════════════════════════════╝
+      -->
+      <div class="certs-grid" id="certsGrid" role="list">
+        <div style="color:var(--text-muted);font-family:var(--font-mono);font-size:.85rem;padding:20px;">
+          Cargando certificados...
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+
+  <!-- ═══════════════════════════════════════════
+       CONTACT SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="contact" aria-label="Contacto">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal" data-i18n="contact.tag">// CONTACTO</span>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n-html="contact.title">Hablemos</h2>
+        <p class="section-subtitle reveal reveal-delay-2" data-i18n="contact.subtitle">
+          Abierto a oportunidades de prácticas, proyectos freelance y colaboraciones en IA.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Left: contact info -->
+        <div>
+          <p class="contact-intro reveal" data-i18n="contact.intro">
+            ¿Tienes un proyecto interesante o una oportunidad laboral? Me encanta conectar
+            con personas que construyen cosas con impacto.
+          </p>
+
+          <div class="contact-items">
+
+            <!-- Email -->
+            <div class="glass-card contact-item reveal reveal-delay-1">
+              <div class="contact-icon-wrap">📧</div>
+              <div>
+                <p class="contact-label" data-i18n="contact.email_label">CORREO ELECTRÓNICO</p>
+                <p class="contact-value">santiagoserna2175@gmail.com</p>
+              </div>
+              <button class="contact-copy" id="copyEmail" data-copy="santiagoserna2175@gmail.com"
+                aria-label="Copiar correo" title="Copiar">📋</button>
+            </div>
+
+            <!-- Phone -->
+            <div class="glass-card contact-item reveal reveal-delay-2">
+              <div class="contact-icon-wrap">📱</div>
+              <div>
+                <p class="contact-label" data-i18n="contact.phone_label">TELÉFONO</p>
+                <p class="contact-value">+57 321 576 6300</p>
+              </div>
+              <button class="contact-copy" id="copyPhone" data-copy="+573215766300" aria-label="Copiar teléfono"
+                title="Copiar">📋</button>
+            </div>
+
+            <!-- GitHub -->
+            <a href="https://github.com/SSS2121" target="_blank" rel="noopener noreferrer"
+              class="glass-card contact-item reveal reveal-delay-3" id="githubLink"
+              style="display:flex; text-decoration:none;">
+              <div class="contact-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--purple-pale)">
+                  <path
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+              </div>
+              <div>
+                <p class="contact-label" data-i18n="contact.github_label">GITHUB</p>
+                <p class="contact-value">github.com/SSS2121</p>
+              </div>
+              <span class="contact-copy" style="margin-left:auto;font-size:1rem;color:var(--text-muted);">↗</span>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Right: Contact form -->
+        <div class="reveal reveal-delay-2">
+          <form class="contact-form-wrap" id="contactForm" novalidate>
+
+            <div class="form-group">
+              <label for="formName" data-i18n="contact.name_label">NOMBRE</label>
+              <input type="text" id="formName" name="name" required autocomplete="name"
+                data-i18n-placeholder="contact.form_name" placeholder="Tu nombre" />
+            </div>
+
+            <div class="form-group">
+              <label for="formEmail" data-i18n="contact.email_field">CORREO</label>
+              <input type="email" id="formEmail" name="email" required autocomplete="email"
+                data-i18n-placeholder="contact.form_email" placeholder="Tu correo electrónico" />
+            </div>
+
+            <div class="form-group">
+              <label for="formMsg" data-i18n="contact.msg_label">MENSAJE</label>
+              <textarea id="formMsg" name="message" rows="5" required data-i18n-placeholder="contact.form_msg"
+                placeholder="Cuéntame sobre tu proyecto o propuesta..."></textarea>
+            </div>
+
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary" id="formSubmitBtn" data-i18n="contact.form_send">
+                Enviar Mensaje ✦
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <p class="footer-copy">
+      <span data-i18n="footer.copy">© 2025 <strong>Santiago Serna Solarte</strong>. Construido con ☕ y
+        curiosidad.</span>
+    </p>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="https://github.com/SSS2121" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:santiagoserna2175@gmail.com">Email</a>
+      <a href="#home">↑ Top</a>
+    </nav>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       LIGHTBOX MODAL
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="lightboxOverlay" role="dialog" aria-modal="true" aria-label="Visor de certificado">
+    <div class="modal-box">
+      <button class="modal-close" id="lightboxClose" aria-label="Cerrar">✕</button>
+      <div class="modal-img-wrap">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
+      <div class="modal-body">
+        <p class="modal-category" id="lightboxCat"></p>
+        <h3 class="modal-title" id="lightboxTitle"></h3>
+        <p class="modal-inst" id="lightboxInst"></p>
+        <p class="modal-date" id="lightboxDate"></p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════
+       TOAST NOTIFICATION
+  ═══════════════════════════════════════════ -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>
