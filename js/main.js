@@ -53,6 +53,8 @@ const translations = {
     'contact.form_name':    'Tu nombre',
     'contact.form_email':   'Tu correo electrónico',
     'contact.form_msg':     'Cuéntame sobre tu proyecto o propuesta...',
+    'contact.email_protected': '[Protegido, haz clic para revelar]',
+    'contact.email_tooltip': 'Haz clic para revelar el correo',
     'footer.copy':      '© 2025 Santiago Serna Solarte. Construido con ☕ y curiosidad.',
     'typewriter_roles': 'Ingeniería de Sistemas|Machine Learning|Automatización Inteligente|Ingeniería en IA',
     'copied':           '¡Copiado al portapapeles!',
@@ -108,6 +110,8 @@ const translations = {
     'contact.form_name':    'Your name',
     'contact.form_email':   'Your email address',
     'contact.form_msg':     'Tell me about your project or proposal...',
+    'contact.email_protected': '[Protected, click to reveal]',
+    'contact.email_tooltip': 'Click to reveal email address',
     'footer.copy':      '© 2025 Santiago Serna Solarte. Built with ☕ and curiosity.',
     'typewriter_roles': 'Systems Engineering|Machine Learning|Intelligent Automation|AI Engineering',
     'copied':           'Copied to clipboard!',
@@ -151,6 +155,13 @@ function applyTranslations(lang) {
     const key = el.getAttribute('data-i18n-placeholder');
     const value = translations[lang][key];
     if (value !== undefined) el.placeholder = value;
+  });
+
+  // Update tooltip for obfuscated email if still hidden
+  document.querySelectorAll('.obfuscated-email').forEach(el => {
+    if (el.hasAttribute('data-i18n')) {
+      el.title = translations[lang]['contact.email_tooltip'];
+    }
   });
 
   // Update titles with newlines
@@ -535,11 +546,13 @@ function initEmailObfuscation() {
   const emailEls = document.querySelectorAll('.obfuscated-email');
   emailEls.forEach(el => { 
     el.style.cursor = 'pointer';
-    el.title = 'Click para revelar correo';
+    el.title = translations[currentLang]['contact.email_tooltip'];
     el.addEventListener('click', function() {
       this.textContent = getEmail();
+      this.removeAttribute('data-i18n'); // prevent it from returning to placeholder on language toggle
+      this.title = '';
+      this.style.cursor = 'auto';
     });
-    // Y también lo copio por si acaso? No, el copy está en otro lado.
   });
   
   const mailtoEls = document.querySelectorAll('.obfuscated-mailto');
