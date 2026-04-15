@@ -50,10 +50,15 @@ const translations = {
     'contact.name_label':   'NOMBRE',
     'contact.email_field':  'CORREO',
     'contact.msg_label':    'MENSAJE',
+    'contact.form_name':    'Tu nombre',
+    'contact.form_email':   'Tu correo electrónico',
+    'contact.form_msg':     'Cuéntame sobre tu proyecto o propuesta...',
     'footer.copy':      '© 2025 Santiago Serna Solarte. Construido con ☕ y curiosidad.',
     'typewriter_roles': 'Ingeniería de Sistemas|Machine Learning|Automatización Inteligente|Ingeniería en IA',
     'copied':           '¡Copiado al portapapeles!',
     'sent_placeholder': '¡Mensaje preparado en tu cliente de correo!',
+    'skill.automation': 'n8n / Automatización',
+    'skill.db':         'PostgreSQL / Bases de Datos',
   },
   en: {
     'nav.about':        'About',
@@ -100,10 +105,15 @@ const translations = {
     'contact.name_label':   'NAME',
     'contact.email_field':  'EMAIL',
     'contact.msg_label':    'MESSAGE',
+    'contact.form_name':    'Your name',
+    'contact.form_email':   'Your email address',
+    'contact.form_msg':     'Tell me about your project or proposal...',
     'footer.copy':      '© 2025 Santiago Serna Solarte. Built with ☕ and curiosity.',
     'typewriter_roles': 'Systems Engineering|Machine Learning|Intelligent Automation|AI Engineering',
     'copied':           'Copied to clipboard!',
     'sent_placeholder': 'Message opened in your mail client!',
+    'skill.automation': 'n8n / Automation',
+    'skill.db':         'PostgreSQL / Databases',
   }
 };
 
@@ -129,14 +139,20 @@ function applyTranslations(lang) {
     const key = el.getAttribute('data-i18n');
     const value = translations[lang][key];
     if (value === undefined) return;
-    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-      el.placeholder = value;
-    } else if (key.includes('bio')) {
+    if (key.includes('bio')) {
       el.innerHTML = value;
     } else {
       el.textContent = value;
     }
   });
+
+  // Manejar placeholders (contact form)
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const value = translations[lang][key];
+    if (value !== undefined) el.placeholder = value;
+  });
+
   // Update titles with newlines
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const key = el.getAttribute('data-i18n-html');
@@ -401,20 +417,23 @@ function renderCertificates(lang) {
   grid.innerHTML = certsData.map((c, i) => {
     const delay = i < 4 ? `reveal-delay-${i + 1}` : '';
     const desc = lang === 'es' ? (c.description_es || '') : (c.description_en || '');
+    const title = lang === 'es' ? c.title : (c.title_en || c.title);
+    const cat   = lang === 'es' ? c.category : (c.category_en || c.category);
+    
     return `
       <div class="glass-card cert-card reveal ${delay}" 
            data-cert-id="${escapeHTML(c.id)}"
-           data-title="${escapeHTML(c.title)}"
+           data-title="${escapeHTML(title)}"
            data-inst="${escapeHTML(c.institution)}"
            data-date="${escapeHTML(c.date)}"
-           data-category="${escapeHTML(c.category)}"
+           data-category="${escapeHTML(cat)}"
            data-img="${escapeHTML(c.image)}"
            data-desc="${escapeHTML(desc)}"
            tabindex="0"
            role="button"
-           aria-label="Ver certificado: ${escapeHTML(c.title)}">
+           aria-label="Ver certificado: ${escapeHTML(title)}">
         <div class="cert-img-wrap">
-          <img src="${escapeHTML(c.image)}" alt="${escapeHTML(c.title)}" onerror="this.style.display='none';this.parentElement.querySelector('.cert-img-placeholder').style.display='flex'">
+          <img src="${escapeHTML(c.image)}" alt="${escapeHTML(title)}" onerror="this.style.display='none';this.parentElement.querySelector('.cert-img-placeholder').style.display='flex'">
           <div class="cert-img-placeholder" style="display:none">
             <span>📜</span>
             <p>SIN IMAGEN</p>
@@ -422,8 +441,8 @@ function renderCertificates(lang) {
           <div class="cert-overlay"><span class="cert-zoom-icon">🔍</span></div>
         </div>
         <div class="cert-info">
-          <p class="cert-category">${escapeHTML(c.category)}</p>
-          <h4 class="cert-title">${escapeHTML(c.title)}</h4>
+          <p class="cert-category">${escapeHTML(cat)}</p>
+          <h4 class="cert-title">${escapeHTML(title)}</h4>
           <p class="cert-inst">${escapeHTML(c.institution)}</p>
           <span class="cert-date">${escapeHTML(formatDate(c.date, lang))}</span>
         </div>
@@ -478,6 +497,7 @@ function openLightbox(data) {
   const cat     = document.getElementById('lightboxCat');
   const inst    = document.getElementById('lightboxInst');
   const date    = document.getElementById('lightboxDate');
+  const desc    = document.getElementById('lightboxDesc');
   if (!overlay) return;
 
   img.src       = data.img;
@@ -486,6 +506,7 @@ function openLightbox(data) {
   cat.textContent   = data.category;
   inst.textContent  = data.inst;
   date.textContent  = formatDate(data.date, currentLang);
+  if (desc) desc.textContent = data.desc || '';
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
