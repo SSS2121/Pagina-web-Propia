@@ -14,14 +14,16 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Portfolio Specific
-/assets/certificates/*.JPG
-/assets/certificates/*.jpg
-/assets/certificates/*.png
-/assets/certificates/*.webp
+# Portfolio Assets (Images and Certificates)
+# We want these to be tracked so they appear on the website
+!/assets/certificates/*.jpg
+!/assets/certificates/*.JPG
+!/assets/certificates/*.png
+!/assets/certificates/*.webp
 !/assets/certificates/COLOCA_AQUI_LOS_CERTIFICADOS.txt
 
-/assets/images/*.JPG
-/assets/images/*.jpg
-/assets/images/*.png
+!/assets/images/*.jpg
+!/assets/images/*.JPG
+!/assets/images/*.png
 !/assets/images/COLOCA_AQUI_TU_FOTO.txt
+
