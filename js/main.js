@@ -107,6 +107,17 @@ const translations = {
   }
 };
 
+/* ===== SECURITY UTILS ===== */
+function escapeHTML(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 /* ===== STATE ===== */
 let currentLang = 'es';
 let typewriterTimeout = null;
@@ -335,13 +346,13 @@ function renderProjects(lang) {
           <div class="project-icon-wrap">${p.icon || '🚀'}</div>
           <span class="project-status-badge ${statusClass}">${statusLabel}</span>
         </div>
-        <h3 class="project-title">${p.title}</h3>
-        <p class="project-description">${desc}</p>
+        <h3 class="project-title">${escapeHTML(p.title)}</h3>
+        <p class="project-description">${escapeHTML(desc)}</p>
         <div class="project-tags">
-          ${p.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+          ${p.tags.map(tag => `<span class="project-tag">${escapeHTML(tag)}</span>`).join('')}
         </div>
         <div class="project-footer">
-          <a href="${p.github}" target="_blank" rel="noopener noreferrer" class="project-github-link">
+          <a href="${escapeHTML(p.github)}" target="_blank" rel="noopener noreferrer" class="project-github-link">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
@@ -399,18 +410,18 @@ function renderCertificates(lang) {
     const desc = lang === 'es' ? (c.description_es || '') : (c.description_en || '');
     return `
       <div class="glass-card cert-card reveal ${delay}" 
-           data-cert-id="${c.id}"
-           data-title="${c.title}"
-           data-inst="${c.institution}"
-           data-date="${c.date}"
-           data-category="${c.category}"
-           data-img="${c.image}"
-           data-desc="${desc}"
+           data-cert-id="${escapeHTML(c.id)}"
+           data-title="${escapeHTML(c.title)}"
+           data-inst="${escapeHTML(c.institution)}"
+           data-date="${escapeHTML(c.date)}"
+           data-category="${escapeHTML(c.category)}"
+           data-img="${escapeHTML(c.image)}"
+           data-desc="${escapeHTML(desc)}"
            tabindex="0"
            role="button"
-           aria-label="Ver certificado: ${c.title}">
+           aria-label="Ver certificado: ${escapeHTML(c.title)}">
         <div class="cert-img-wrap">
-          <img src="${c.image}" alt="${c.title}" onerror="this.style.display='none';this.parentElement.querySelector('.cert-img-placeholder').style.display='flex'">
+          <img src="${escapeHTML(c.image)}" alt="${escapeHTML(c.title)}" onerror="this.style.display='none';this.parentElement.querySelector('.cert-img-placeholder').style.display='flex'">
           <div class="cert-img-placeholder" style="display:none">
             <span>📜</span>
             <p>SIN IMAGEN</p>
@@ -418,10 +429,10 @@ function renderCertificates(lang) {
           <div class="cert-overlay"><span class="cert-zoom-icon">🔍</span></div>
         </div>
         <div class="cert-info">
-          <p class="cert-category">${c.category}</p>
-          <h4 class="cert-title">${c.title}</h4>
-          <p class="cert-inst">${c.institution}</p>
-          <span class="cert-date">${formatDate(c.date, lang)}</span>
+          <p class="cert-category">${escapeHTML(c.category)}</p>
+          <h4 class="cert-title">${escapeHTML(c.title)}</h4>
+          <p class="cert-inst">${escapeHTML(c.institution)}</p>
+          <span class="cert-date">${escapeHTML(formatDate(c.date, lang))}</span>
         </div>
       </div>
     `;
@@ -501,11 +512,26 @@ function initLightbox() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 }
 
+/* ===== EMAIL OBFUSCATION & COPY ===== */
+function getEmail() {
+  return ['santiago', 'serna2175', '@', 'gmail', '.com'].join('');
+}
+
+function initEmailObfuscation() {
+  const emailEls = document.querySelectorAll('.obfuscated-email');
+  emailEls.forEach(el => { el.textContent = getEmail(); });
+  
+  const mailtoEls = document.querySelectorAll('.obfuscated-mailto');
+  mailtoEls.forEach(el => { el.href = `mailto:${getEmail()}`; });
+}
+
 /* ===== COPY TO CLIPBOARD ===== */
 function initCopyBtns() {
   document.querySelectorAll('[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const text = btn.getAttribute('data-copy');
+      let text = btn.getAttribute('data-copy');
+      if (text === 'email_protected') text = getEmail();
+
       navigator.clipboard.writeText(text).then(() => {
         showToast(translations[currentLang]['copied']);
       }).catch(() => {
@@ -540,7 +566,7 @@ function initContactForm() {
     const email = form.querySelector('#formEmail').value;
     const msg   = form.querySelector('#formMsg').value;
     const body  = encodeURIComponent(`Hola Santiago,\n\nMi nombre es ${name} (${email}).\n\n${msg}`);
-    window.open(`mailto:santiagoserna2175@gmail.com?subject=Contacto desde portafolio&body=${body}`, '_blank');
+    window.open(`mailto:${getEmail()}?subject=Contacto desde portafolio&body=${body}`, '_blank');
     showToast(translations[currentLang]['sent_placeholder']);
     form.reset();
   });
@@ -571,6 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initLangToggle();
   initLightbox();
+  initEmailObfuscation();
   initCopyBtns();
   initContactForm();
   initActiveNav();
