@@ -519,7 +519,14 @@ function getEmail() {
 
 function initEmailObfuscation() {
   const emailEls = document.querySelectorAll('.obfuscated-email');
-  emailEls.forEach(el => { el.textContent = getEmail(); });
+  emailEls.forEach(el => { 
+    el.style.cursor = 'pointer';
+    el.title = 'Click para revelar correo';
+    el.addEventListener('click', function() {
+      this.textContent = getEmail();
+    });
+    // Y también lo copio por si acaso? No, el copy está en otro lado.
+  });
   
   const mailtoEls = document.querySelectorAll('.obfuscated-mailto');
   mailtoEls.forEach(el => { el.href = `mailto:${getEmail()}`; });
