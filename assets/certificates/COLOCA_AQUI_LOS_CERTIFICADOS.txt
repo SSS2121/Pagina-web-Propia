@@ -1,7 +1,0 @@
-# Coloca aquí las imágenes de tus certificados.
-# Formatos aceptados: .jpg, .jpeg, .png, .webp
-# Nombre sugerido: cert_nombre_plataforma.jpg (sin espacios)
-# Ejemplo: cert_coursera_ml.jpg, cert_google_data.png
-#
-# Luego actualiza data/certificates.json con la ruta correspondiente.
-# Ejemplo: "image": "assets/certificates/cert_coursera_ml.jpg"

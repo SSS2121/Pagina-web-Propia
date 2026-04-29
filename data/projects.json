@@ -2,6 +2,7 @@
   {
     "id": 1,
     "title": "N8n — List of Printers",
+    "title_en": "N8n — List of Printers",
     "github": "https://github.com/SSS2121/N8n---list-of-printers",
     "status": "production",
     "icon": "🖨️",

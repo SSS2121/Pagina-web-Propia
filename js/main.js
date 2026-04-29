@@ -362,9 +362,11 @@ function renderProjects(lang) {
   const t = translations[lang];
 
   grid.innerHTML = projectsData.map((p, i) => {
-    const desc = lang === 'es' ? p.description_es : p.description_en;
-    const statusClass = p.status === 'production' ? 'status-production' : 'status-development';
-    const statusLabel = p.status === 'production' ? '● Production' : '● Dev';
+    const desc  = lang === 'es' ? p.description_es : p.description_en;
+    const title = lang === 'es' ? p.title : (p.title_en || p.title);
+    const statusLabel = "● " + (lang === 'es' ? (p.ES_status || 'En desarrollo') : (p.EN_status || 'In development'));
+    const isFinished  = statusLabel.toLowerCase().includes('terminado') || statusLabel.toLowerCase().includes('completado') || statusLabel.toLowerCase().includes('finished') || statusLabel.toLowerCase().includes('completed');
+    const statusClass = isFinished ? 'status-production' : 'status-development';
     const delay = i < 4 ? `reveal-delay-${i + 1}` : '';
 
     return `
@@ -373,7 +375,7 @@ function renderProjects(lang) {
           <div class="project-icon-wrap">${p.icon || '🚀'}</div>
           <span class="project-status-badge ${statusClass}">${statusLabel}</span>
         </div>
-        <h3 class="project-title">${escapeHTML(p.title)}</h3>
+        <h3 class="project-title">${escapeHTML(title)}</h3>
         <p class="project-description">${escapeHTML(desc)}</p>
         <div class="project-tags">
           ${p.tags.map(tag => `<span class="project-tag">${escapeHTML(tag)}</span>`).join('')}

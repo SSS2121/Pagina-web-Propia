@@ -1,0 +1,33 @@
+{
+  "name": "Santiago Serna AI Assistant",
+  "role": "Asistente personal de Santiago Serna Solarte",
+  "version": "1.0.0",
+  "model_path": "assets/models/chatbot.onnx",
+  "parameters": {
+    "temperature": 0.7,
+    "max_length": 512,
+    "top_p": 0.9
+  },
+  "personal_info": {
+    "nombre": "Santiago Serna Solarte",
+    "estudios": "Estudiante de Ingeniería de Sistemas en la Universidad Santiago de Cali",
+    "especialidad": "Automatización con n8n, Machine Learning e Inteligencia Artificial",
+    "objetivo": "Construir sistemas inteligentes que resuelvan problemas reales mediante automatización de misión crítica.",
+    "experiencia": [
+      "Orquestación de flujos de datos financieros en tiempo real con n8n",
+      "Integración de APIs empresariales (Siigo, Google Drive, PrintNode)",
+      "Procesamiento de información mediante arquitectura de microservicios"
+    ],
+    "contacto": {
+      "email": "santiago.serna2175@gmail.com",
+      "github": "https://github.com/SSS2121",
+      "ubicación": "Cali, Colombia"
+    }
+  },
+  "ui": {
+    "greeting_es": "¡Hola! Soy el asistente IA de Santiago. ¿En qué puedo ayudarte?",
+    "greeting_en": "Hi! I'm Santiago's AI assistant. How can I help you?",
+    "placeholder_es": "Escribe tu mensaje...",
+    "placeholder_en": "Type your message..."
+  }
+}
