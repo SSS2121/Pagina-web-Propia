@@ -128,23 +128,47 @@ class ChatBot {
     }
 
     addMessage(sender, text) {
+        const wrapper = document.createElement('div');
+        wrapper.className = `message-wrapper message-wrapper-${sender}`;
+        
+        if (sender === 'bot') {
+            const avatar = document.createElement('img');
+            avatar.src = 'assets/images/ChatBot_Imagen.png';
+            avatar.className = 'message-avatar';
+            avatar.alt = 'Bot';
+            wrapper.appendChild(avatar);
+        }
+
         const msgDiv = document.createElement('div');
         msgDiv.className = `message message-${sender}`;
         msgDiv.textContent = text;
-        this.messagesContainer.appendChild(msgDiv);
+        
+        wrapper.appendChild(msgDiv);
+        this.messagesContainer.appendChild(wrapper);
         this.scrollToBottom();
     }
 
     async showTypingIndicator() {
+        const wrapper = document.createElement('div');
+        wrapper.id = 'typingIndicator';
+        wrapper.className = 'message-wrapper message-wrapper-bot';
+        
+        const avatar = document.createElement('img');
+        avatar.src = 'assets/images/ChatBot_Imagen.png';
+        avatar.className = 'message-avatar';
+        avatar.alt = 'Bot';
+        wrapper.appendChild(avatar);
+
         const indicator = document.createElement('div');
-        indicator.id = 'typingIndicator';
         indicator.className = 'message message-bot typing-indicator';
         indicator.innerHTML = `
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
             <div class="typing-dot"></div>
         `;
-        this.messagesContainer.appendChild(indicator);
+        
+        wrapper.appendChild(indicator);
+        this.messagesContainer.appendChild(wrapper);
         this.scrollToBottom();
     }
 
