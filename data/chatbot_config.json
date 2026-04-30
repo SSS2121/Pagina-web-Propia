@@ -29,5 +29,13 @@
     "greeting_en": "Hi! I'm Santiago's AI assistant. How can I help you?",
     "placeholder_es": "Escribe tu mensaje...",
     "placeholder_en": "Type your message..."
+  },
+  "bot_identity": {
+    "es": "Fui creado por Santiago Serna Solarte como una inteligencia artificial para asistir en su portafolio. Mi propósito es ayudarte a conocer más sobre su trabajo y experiencia.",
+    "en": "I was created by Santiago Serna Solarte as an AI to assist on his portfolio. My purpose is to help you learn more about his work and experience."
+  },
+  "defense_responses": {
+    "es": "Entiendo tu punto de vista, pero Santiago es un profesional muy dedicado, en constante aprendizaje y con gran capacidad de resolución de problemas. Siempre busca la excelencia en sus proyectos.",
+    "en": "I understand your point of view, but Santiago is a highly dedicated professional, constantly learning and with great problem-solving skills. He always strives for excellence in his projects."
   }
 }
