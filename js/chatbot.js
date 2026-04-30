@@ -113,38 +113,41 @@ class ChatBot {
         const info = this.config.personal_info;
 
         const isAffirmative = input.includes('vale') || input.includes('si') || input.includes('ok') || input.includes('claro') || input.includes('por supuesto') || input.includes('dale');
-        const isNavigationRequest = input.includes('llevame') || input.includes('ir a') || input.includes('muestrame') || input.includes('quiero ver') || input.includes('lleve');
+        const isNavigationRequest = input.includes('llevame') || input.includes('ir a') || input.includes('muestrame') || input.includes('quiero ver') || input.includes('lleve') || input.includes('navegar') || input.includes('ver');
+        
+        const mentionsSection = input.includes('contacto') || input.includes('proyecto') || input.includes('certificado') || input.includes('sobre mi') || input.includes('acerca de') || input.includes('portafolio') || input.includes('estudio') || input.includes('diploma');
 
         // --- 1. MEMORIA CONTEXTUAL (Follow-ups) ---
-        if (this.context === 'contacto') {
-            if (isAffirmative || input.includes('mas informacion') || input.includes('correo') || input.includes('email')) {
+        // Solo actua por contexto si el mensaje NO menciona una sección nueva explícitamente
+        if (!mentionsSection) {
+            if (this.context === 'contacto' && (isAffirmative || input.includes('mas informacion') || input.includes('correo') || input.includes('email'))) {
                 this.context = 'idle';
                 return lang === 'es' ? 
                     `¡Genial! Puedes enviarle un correo a ${info.contacto.email} o visitar su GitHub en ${info.contacto.github}.` :
                     `Great! You can email him at ${info.contacto.email} or visit his GitHub at ${info.contacto.github}.`;
-            } else if (isNavigationRequest) {
+            } else if (this.context === 'contacto' && isNavigationRequest) {
                 this.context = 'idle';
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "¡Claro! Te he llevado a la sección de contacto." : "Sure! I've taken you to the contact section.";
             }
-        }
 
-        if (this.context === 'proyectos' && (isAffirmative || isNavigationRequest || input.includes('mas'))) {
-            this.context = 'idle';
-            document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-            return lang === 'es' ? "Te he llevado a la sección de proyectos para que puedas verlos en detalle." : "I've taken you to the projects section so you can see them in detail.";
-        }
+            if (this.context === 'proyectos' && (isAffirmative || isNavigationRequest || input.includes('mas'))) {
+                this.context = 'idle';
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                return lang === 'es' ? "Te he llevado a la sección de proyectos para que puedas verlos en detalle." : "I've taken you to the projects section so you can see them in detail.";
+            }
 
-        if (this.context === 'certificados' && (isAffirmative || isNavigationRequest)) {
-            this.context = 'idle';
-            document.getElementById('certificates')?.scrollIntoView({ behavior: 'smooth' });
-            return lang === 'es' ? "Te he llevado a la bóveda de certificados." : "I've taken you to the certificates vault.";
-        }
+            if (this.context === 'certificados' && (isAffirmative || isNavigationRequest)) {
+                this.context = 'idle';
+                document.getElementById('certificates')?.scrollIntoView({ behavior: 'smooth' });
+                return lang === 'es' ? "Te he llevado a la bóveda de certificados." : "I've taken you to the certificates vault.";
+            }
 
-        if (this.context === 'sobre_mi' && (isAffirmative || isNavigationRequest)) {
-            this.context = 'idle';
-            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-            return lang === 'es' ? "Te he llevado a la sección sobre mí." : "I've taken you to the about section.";
+            if (this.context === 'sobre_mi' && (isAffirmative || isNavigationRequest)) {
+                this.context = 'idle';
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                return lang === 'es' ? "Te he llevado a la sección sobre mí." : "I've taken you to the about section.";
+            }
         }
 
 
@@ -154,19 +157,19 @@ class ChatBot {
                 this.context = 'idle';
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "¡Claro! Te he llevado a la sección de contacto." : "Sure! I've taken you to the contact section.";
-            } else if (input.includes('proyecto')) {
+            } else if (input.includes('proyecto') || input.includes('portafolio')) {
                 this.context = 'idle';
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "Aquí tienes la sección de proyectos." : "Here is the projects section.";
-            } else if (input.includes('certificado')) {
+            } else if (input.includes('certificado') || input.includes('diploma') || input.includes('estudio')) {
                 this.context = 'idle';
                 document.getElementById('certificates')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "Te he llevado a la bóveda de certificados." : "I've taken you to the certificates vault.";
-            } else if (input.includes('sobre mi') || input.includes('acerca de')) {
+            } else if (input.includes('sobre mi') || input.includes('acerca de') || input.includes('quien es')) {
                 this.context = 'idle';
                 document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "Aquí puedes leer más sobre Santiago." : "Here you can read more about Santiago.";
-            } else {
+            } else if (!mentionsSection) {
                 // Pidió que lo llevaran pero no dijo a dónde (y no había contexto previo)
                 return lang === 'es' ? 
                     "¿A qué sección te gustaría ir? Puedes elegir: Sobre mí, Proyectos, Certificados o Contacto." : 
