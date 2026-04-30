@@ -112,56 +112,71 @@ class ChatBot {
         const lang = document.documentElement.lang || 'es';
         const info = this.config.personal_info;
 
-        // Contextual Follow-up (Memoria)
-        if (this.context === 'contacto' && (input.includes('vale') || input.includes('si') || input.includes('gracias') || input.includes('ok') || input.includes('mas informacion'))) {
-            this.context = 'idle';
-            return lang === 'es' ? 
-                `¡Genial! Puedes enviarle un correo a ${info.contacto.email} o visitar su GitHub en ${info.contacto.github}.` :
-                `Great! You can email him at ${info.contacto.email} or visit his GitHub at ${info.contacto.github}.`;
+        const isAffirmative = input.includes('vale') || input.includes('si') || input.includes('ok') || input.includes('claro') || input.includes('por supuesto') || input.includes('dale');
+        const isNavigationRequest = input.includes('llevame') || input.includes('ir a') || input.includes('muestrame') || input.includes('quiero ver') || input.includes('lleve');
+
+        // --- 1. MEMORIA CONTEXTUAL (Follow-ups) ---
+        if (this.context === 'contacto') {
+            if (isAffirmative || input.includes('mas informacion') || input.includes('correo') || input.includes('email')) {
+                this.context = 'idle';
+                return lang === 'es' ? 
+                    `¡Genial! Puedes enviarle un correo a ${info.contacto.email} o visitar su GitHub en ${info.contacto.github}.` :
+                    `Great! You can email him at ${info.contacto.email} or visit his GitHub at ${info.contacto.github}.`;
+            } else if (isNavigationRequest) {
+                this.context = 'idle';
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                return lang === 'es' ? "¡Claro! Te he llevado a la sección de contacto." : "Sure! I've taken you to the contact section.";
+            }
         }
 
-        if (this.context === 'proyectos' && (input.includes('vale') || input.includes('si') || input.includes('ok') || input.includes('mas') || input.includes('llevame'))) {
+        if (this.context === 'proyectos' && (isAffirmative || isNavigationRequest || input.includes('mas'))) {
             this.context = 'idle';
             document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
             return lang === 'es' ? "Te he llevado a la sección de proyectos para que puedas verlos en detalle." : "I've taken you to the projects section so you can see them in detail.";
         }
 
-        // 1. Navigation Commands (Control del DOM)
-        if (input.includes('llevame') || input.includes('ir a') || input.includes('muestrame') || input.includes('quiero ver')) {
+        if (this.context === 'certificados' && (isAffirmative || isNavigationRequest)) {
+            this.context = 'idle';
+            document.getElementById('certificates')?.scrollIntoView({ behavior: 'smooth' });
+            return lang === 'es' ? "Te he llevado a la bóveda de certificados." : "I've taken you to the certificates vault.";
+        }
+
+        if (this.context === 'sobre_mi' && (isAffirmative || isNavigationRequest)) {
+            this.context = 'idle';
+            document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+            return lang === 'es' ? "Te he llevado a la sección sobre mí." : "I've taken you to the about section.";
+        }
+
+
+        // --- 2. NAVEGACIÓN DIRECTA EXPLICITA ---
+        if (isNavigationRequest) {
             if (input.includes('contacto')) {
+                this.context = 'idle';
                 document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                this.context = 'contacto';
                 return lang === 'es' ? "¡Claro! Te he llevado a la sección de contacto." : "Sure! I've taken you to the contact section.";
-            }
-            if (input.includes('proyecto')) {
+            } else if (input.includes('proyecto')) {
+                this.context = 'idle';
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-                this.context = 'proyectos';
                 return lang === 'es' ? "Aquí tienes la sección de proyectos." : "Here is the projects section.";
-            }
-            if (input.includes('certificado')) {
+            } else if (input.includes('certificado')) {
+                this.context = 'idle';
                 document.getElementById('certificates')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "Te he llevado a la bóveda de certificados." : "I've taken you to the certificates vault.";
-            }
-            if (input.includes('sobre mi') || input.includes('acerca de')) {
+            } else if (input.includes('sobre mi') || input.includes('acerca de')) {
+                this.context = 'idle';
                 document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
                 return lang === 'es' ? "Aquí puedes leer más sobre Santiago." : "Here you can read more about Santiago.";
+            } else {
+                // Pidió que lo llevaran pero no dijo a dónde (y no había contexto previo)
+                return lang === 'es' ? 
+                    "¿A qué sección te gustaría ir? Puedes elegir: Sobre mí, Proyectos, Certificados o Contacto." : 
+                    "Where would you like to go? You can choose: About, Projects, Certificates, or Contact.";
             }
         }
 
-        // 2. Identity (Identidad del bot)
-        if (input.includes('quien eres') || input.includes('quien te creo') || input.includes('que eres') || input.includes('tu creador')) {
-            this.context = 'idle';
-            return this.config.bot_identity ? this.config.bot_identity[lang] : "Fui creado por Santiago Serna Solarte como un asistente de IA.";
-        }
 
-        // 3. Defense / Sentiment (Pesos/Defensa)
-        if (input.includes('malo') || input.includes('queja') || input.includes('critica') || input.includes('pesimo') || input.includes('no sirve') || input.includes('error')) {
-            this.context = 'idle';
-            return this.config.defense_responses ? this.config.defense_responses[lang] : "Santiago es un profesional dedicado, en constante aprendizaje y con gran capacidad de resolución de problemas.";
-        }
-
-        // 4. Projects details
-        if (input.includes('proyecto') || input.includes('sabe mas informacion') || input.includes('mas info') || input.includes('portafolio')) {
+        // --- 3. TEMAS Y PREGUNTAS (Sin pedir navegación todavía) ---
+        if (input.includes('proyecto') || input.includes('portafolio') || input.includes('trabajos')) {
             this.context = 'proyectos';
             if (window.projectsData && window.projectsData.length > 0) {
                 const projNames = window.projectsData.map(p => lang === 'es' ? p.title : (p.title_en || p.title)).join(", ");
@@ -169,34 +184,57 @@ class ChatBot {
                     `Santiago ha trabajado en sistemas increíbles, por ejemplo: ${projNames}. ¿Te gustaría que te lleve a la sección de proyectos para verlos a detalle?` : 
                     `Santiago has built amazing systems, such as: ${projNames}. Would you like me to take you to the projects section to see them?`;
             }
-            return lang === 'es' ? "Santiago tiene experiencia en automatización con n8n e IA. ¿Quieres ir a la sección de proyectos?" : "Santiago has experience in n8n automation and AI. Want to go to the projects section?";
+            return lang === 'es' ? "Santiago tiene experiencia en automatización con n8n e IA. ¿Quieres que te lleve a la sección de proyectos?" : "Santiago has experience in n8n automation and AI. Want me to take you to the projects section?";
         }
 
-        // 5. General Info & Fuzzy Matches
+        if (input.includes('certificado') || input.includes('estudio') || input.includes('diploma')) {
+            this.context = 'certificados';
+            return lang === 'es' ? 
+                "Santiago cuenta con certificaciones técnicas en su área. ¿Te gustaría que te lleve a la bóveda de certificados?" : 
+                "Santiago has technical certifications in his field. Would you like me to take you to the certificates vault?";
+        }
+
+        if (input.includes('contacto') || input.includes('contact') || input.includes('hablar con el') || input.includes('escribirle')) {
+            this.context = 'contacto';
+            return lang === 'es' ? 
+                `Puedes contactar a Santiago por correo electrónico. ¿Quieres que te lleve a la sección de contacto o te doy su correo por aquí?` : 
+                `You can contact Santiago via email. Do you want me to take you to the contact section or give you his email here?`;
+        }
+        
+        if (input.includes('sobre mi') || input.includes('acerca de santiago') || input.includes('quien es santiago') || input.includes('quien es el') || input.includes('santiago')) {
+            this.context = 'sobre_mi';
+            return lang === 'es' ? 
+                `Él es un ${info.estudios} y se especializa en ${info.especialidad}. ¿Quieres que te lleve a la sección donde habla sobre él?` : 
+                `He is a ${info.estudios} and specializes in ${info.especialidad}. Want me to take you to his about section?`;
+        }
+
+
+        // --- 4. IDENTIDAD Y DEFENSA ---
+        if (input.includes('quien eres') || input.includes('quien te creo') || input.includes('que eres') || input.includes('tu creador')) {
+            this.context = 'idle';
+            return this.config.bot_identity ? this.config.bot_identity[lang] : "Fui creado por Santiago Serna Solarte como un asistente de IA.";
+        }
+
+        if (input.includes('malo') || input.includes('queja') || input.includes('critica') || input.includes('pesimo') || input.includes('no sirve') || input.includes('error') || input.includes('estupido')) {
+            this.context = 'idle';
+            return this.config.defense_responses ? this.config.defense_responses[lang] : "Santiago es un profesional dedicado, en constante aprendizaje y con gran capacidad de resolución de problemas.";
+        }
+
+        // --- 5. INFO GENERAL (Fallbacks conocidos) ---
         if (input.includes('ola') || input.includes('hola') || input.includes('hello') || input.includes('buenas')) {
             this.context = 'idle';
             return this.getGreeting();
-        }
-        if (input.includes('quien es santiago') || input.includes('quien es el') || input.includes('santiago')) {
-            this.context = 'idle';
-            return lang === 'es' ? `Él es un ${info.estudios} y se especializa en ${info.especialidad}.` : `He is a ${info.estudios} and specializes in ${info.especialidad}.`;
         }
         if (input.includes('n8n') || input.includes('automatizacion') || input.includes('automation') || input.includes('ia') || input.includes('ai') || input.includes('machine learning')) {
             this.context = 'idle';
             return lang === 'es' ? `Tiene experiencia en ${info.experiencia[0]} y otras integraciones como ${info.experiencia[1]}.` : `He has experience in ${info.experiencia[0]} and other integrations like ${info.experiencia[1]}.`;
         }
-        if (input.includes('contacto') || input.includes('contact') || input.includes('hablar con el') || input.includes('escribirle')) {
-            this.context = 'contacto';
-            return lang === 'es' ? 
-                `Puedes contactar a Santiago por correo electrónico. ¿Quieres que te lleve a la sección de contacto o te doy su correo directamente?` : 
-                `You can contact Santiago via email. Do you want me to take you to the contact section or give you his email directly?`;
-        }
 
-        // Fallback
+        // --- FALLBACK GENERAL ---
         this.context = 'idle';
         return lang === 'es' ? 
-            "Esa es una excelente pregunta. Santiago está especializado en IA, n8n y automatización. Si deseas detalles específicos, te recomiendo explorar las secciones de la página o ir a 'Proyectos'." : 
-            "That's a great question. Santiago specializes in AI, n8n, and automation. For specific details, I recommend exploring the page sections or going to 'Projects'.";
+            "Esa es una excelente pregunta. Santiago está especializado en IA, n8n y automatización. Si deseas detalles específicos, te recomiendo explorar las secciones de la página o pedirme ir a 'Proyectos'." : 
+            "That's a great question. Santiago specializes in AI, n8n, and automation. For specific details, I recommend exploring the page sections or asking to go to 'Projects'.";
     }
 
     addMessage(sender, text) {
